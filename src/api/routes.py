@@ -19,22 +19,21 @@ def handle_hello():
 
 @api.route('/signup', methods=['POST'])
 def handle_signup():
-    username = request.json.get("username", None)
     email = request.json.get("email", None)
     password = request.json.get("password", None)
-    newUser = User(username = username, email = email, password = password)
-    if User.query.filter_by(username = username, email = email).first() == None:
-        db.session.add(newUser)
-        db.session.commit()
-        return jsonify("Added User"), 200
-    else:
-        return jsonify("That username or email is already in use"), 400
+    user = User.query.filter_by(email = email).first()
+    if user:
+        return jsonify({"msg": "User account already exists"})
+    newUser = User(email = email, password = password)
+    db.session.add(newUser)
+    db.session.commit()
+    return jsonify("Added User"), 200
 
 @api.route('/login', methods=['POST'])
 def handle_login():
-    username = request.json.get("username", None)
+    email = request.json.get("email", None)
     password = request.json.get("password", None)
-    user = User.query.filter_by(username=username, password=password).first()
+    user = User.query.filter_by(email=email, password=password).first()
     if user is None:
         return jsonify({"msg" : "Bad username or password"}), 401
     access_token = create_access_token(identity=user.id)
@@ -45,5 +44,8 @@ def handle_login():
 def handle_private():
     current_user_id = get_jwt_identity()
     user = User.query.get(current_user_id)
-    
-    return jsonify({"user_id": user.id, "username":user.username}), 200
+
+    if user is None:
+        return jsonify({"msg": "Please login"})
+    else:
+        return jsonify({"user_id": user.id, "email":user.email}), 200
