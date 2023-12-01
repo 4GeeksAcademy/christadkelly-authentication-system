@@ -20,11 +20,10 @@ const Private = () => {
             <h1>Hello!</h1>
             {store.user!= null ?
                 <div >
-                    <h2>Username: {store.user.username}</h2>
-                    <h2>Id: {store.user.id}</h2>
+                    <h2>Email: {store.user.email}</h2>
                 </div>
                 :
-                ''
+                navigate("/login")
             }
         </div>
     );

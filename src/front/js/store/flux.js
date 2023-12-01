@@ -92,7 +92,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			authenticateUser: (navigate) => {
 				const store = getStore();
 				console.log(store.token);
-				const url = "https://cautious-space-giggle-5xr4qgjg65ghpvj6-3000.app.github.dev/api/private"
+				const url = "https://cautious-space-giggle-5xr4qgjg65ghpvj6-3001.app.github.dev/api/private"
 				fetch(url, {
 					method: "GET",
 					headers: {

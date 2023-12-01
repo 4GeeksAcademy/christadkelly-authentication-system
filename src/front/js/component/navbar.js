@@ -14,7 +14,7 @@ export const Navbar = () => {
 					<span className="navbar-brand mb-0 h1">React Boilerplate</span>
 				</Link>
 				<div className="ml-auto">
-					{!store.token ? 
+					{!store.user ? 
 						<>
 							<Link to="/signup">
 								<button className="btn btn-primary">Signup</button>
@@ -28,9 +28,7 @@ export const Navbar = () => {
 							<Link to="/private">
 								<button className="btn btn-primary">User</button>
 							</Link>
-							<Link to="/login">
-								<button className="btn btn-primary" onClick={() => actions.logout(nagivate)}>Log Out</button>
-							</Link>
+							<button className="btn btn-primary" onClick={() => actions.logout()}>Log Out</button>
 						</>
 					}
 				</div>
